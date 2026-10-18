@@ -1,4 +1,3 @@
-# fastapi-project/app.py
 import streamlit as st
 import requests
 
@@ -17,7 +16,8 @@ if st.button("Predict Churn"):
     }
     
     try:
-        response = requests.post("http://127.0.0.1:8000/predict", json=payload)
+        # Localhost URL ki jagah Render wala Live Backend URL use kiya hai
+        response = requests.post("https://customer-churn-using-fastapi.onrender.com/predict", json=payload)
         if response.status_code == 200:
             res = response.json()
             prob = res["churn_probability"] * 100
