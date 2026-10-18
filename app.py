@@ -16,7 +16,6 @@ if st.button("Predict Churn"):
     }
     
     try:
-        # Localhost URL ki jagah Render wala Live Backend URL use kiya hai
         response = requests.post("https://customer-churn-using-fastapi.onrender.com/predict", json=payload)
         if response.status_code == 200:
             res = response.json()
@@ -28,7 +27,11 @@ if st.button("Predict Churn"):
                 st.success(f"✅ Yeh customer safe hai. Churn Probability: {prob:.2f}%")
                 
             st.subheader("🔍 AI Explanation (SHAP Impact):")
-            st.write(res["explanation"])
+            
+            # JSON/Dictionary ko clean bullets mein print karne ke liye
+            for key, value in res["explanation"].items():
+                st.write(f"- **{key}**: {value}")
+                
         else:
             st.error("Backend API se error aayi hai.")
     except Exception as e:
